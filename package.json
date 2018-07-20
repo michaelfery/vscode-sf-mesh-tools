@@ -38,12 +38,12 @@
             },
             {
                 "command": "sfmesh.createDeploymentProfile",
-                "title": "Create deployment profile",
+                "title": "Create Deployment Profile",
                 "category": "Service Fabric Mesh"
             },
             {
                 "command": "sfmesh.deploy",
-                "title": "Deploy to Azure",
+                "title": "Deploy To Azure",
                 "category": "Service Fabric Mesh"
             }
         ],
