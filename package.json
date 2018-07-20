@@ -64,7 +64,12 @@
                 "sf-mesh-tools.defaultTemplateUri": {
 					"type": "string",
 					"default": "https://sfmeshsamples.blob.core.windows.net/templates/helloworld/mesh_rp.linux.json",
-					"description": "Default templateUri when generate deploy profile"
+					"description": "Default template uri when generate deploy profile"
+				},
+                "sf-mesh-tools.defaultTemplateFile": {
+					"type": "string",
+					"default": "",
+					"description": "Default template file path when generate deploy profile"
 				},
                 "sf-mesh-tools.defaultDeployLocation": {
 					"type": "string",

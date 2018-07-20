@@ -29,8 +29,9 @@ export function deactivate() {
 
 class DeploymentProfile{
     SubscriptionId?:string;
-    ResourceGroup?: string;    
+    ResourceGroup?: string;
     TemplateUri?: string;
+    TemplateFile?: string;
     Location?: string;
 }
 
@@ -47,6 +48,7 @@ async function createDeploymentProfile() {
     deployment.Location = configuration.get<string>(constants.config.defaultDeployLocation);
     deployment.ResourceGroup = configuration.get<string>(constants.config.defaultResourceGroup);
     deployment.TemplateUri = configuration.get<string>(constants.config.defaultTemplateUri);
+    deployment.TemplateFile = configuration.get<string>(constants.config.defaultTemplateFile);
     let json = JSON.stringify(deployment, undefined, 4);
     
     let filePath = path.join(<string>vscode.workspace.rootPath, constants.config.deploymentFileName);
@@ -64,17 +66,22 @@ async function deployToAzure() {
         }
         let deploymentProfile = Object.assign(new DeploymentProfile, JSON.parse(data));
 
-        if (deploymentProfile.ResourceGroup === undefined || deploymentProfile.ResourceGroup.length <= 0 ||
-                deploymentProfile.TemplateUri === undefined || deploymentProfile.TemplateUri.length <= 0 ||
-                deploymentProfile.SubscriptionId === undefined || deploymentProfile.SubscriptionId.length <= 0) {
-            vscode.window.showInformationMessage('Deployment file is missing parameters');
+        if (deploymentProfile.ResourceGroup === undefined || deploymentProfile.ResourceGroup.length <= 0) {
+            vscode.window.showInformationMessage('Deployment file is missing parameter ResourceGroup');
+        } else if ((deploymentProfile.TemplateUri === undefined || deploymentProfile.TemplateUri.length <= 0) &&
+                    (deploymentProfile.TemplateFile === undefined || deploymentProfile.TemplateFile.length <= 0)) {
+            vscode.window.showInformationMessage('Deployment file is missing parameter TemplateUri or TemplateFile');
         } else {
             let terminal = getTerminal();
             terminal.show(true);
-            // terminal.sendText("az login", true);
-            terminal.sendText("az account set --subscription " + deploymentProfile.SubscriptionId, true);
-            
-            terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '{\\\"location\\\": {\\\"value\\\": \\\"" + deploymentProfile.Location + "\\\"}}'", true);
+            if (deploymentProfile.SubscriptionId !== undefined && deploymentProfile.SubscriptionId.length > 0) {
+                terminal.sendText("az account set --subscription " + deploymentProfile.SubscriptionId, true);
+            }
+            if (deploymentProfile.TemplateUri !== undefined && deploymentProfile.TemplateUri.length > 0) {
+                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '{\\\"location\\\": {\\\"value\\\": \\\"" + deploymentProfile.Location + "\\\"}}'", true);
+            } else {
+                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-file " + deploymentProfile.TemplateFile + " --parameters '{\\\"location\\\": {\\\"value\\\": \\\"" + deploymentProfile.Location + "\\\"}}'", true);
+            }            
         }
     });
 }
