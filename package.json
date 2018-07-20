@@ -2,11 +2,16 @@
     "name": "sf-mesh-tools",
     "displayName": "Service Fabric Mesh Tools",
     "description": "Service Fabric Mesh Tools",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "mfery",
-    "icon": "media/service-fabric.png",
     "engines": {
         "vscode": "^1.25.0"
+    },
+    "preview": true,
+    "icon": "media/sfmesh.png",
+    "galleryBanner": {
+      "color": "#000",
+      "theme": "dark"
     },
     "repository": {
         "type": "git",
