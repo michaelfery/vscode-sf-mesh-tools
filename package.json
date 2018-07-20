@@ -2,17 +2,13 @@
     "name": "sf-mesh-tools",
     "displayName": "Service Fabric Mesh Tools",
     "description": "Service Fabric Mesh Tools",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "publisher": "mfery",
     "engines": {
         "vscode": "^1.25.0"
     },
     "preview": true,
     "icon": "media/sfmesh.png",
-    "galleryBanner": {
-      "color": "#000",
-      "theme": "dark"
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/michaelfery/vscode-sf-mesh-tools"
