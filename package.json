@@ -1,0 +1,91 @@
+{
+    "name": "sf-mesh-tools",
+    "displayName": "Service Fabric Mesh Tools",
+    "description": "Service Fabric Mesh Tools",
+    "version": "0.0.1",
+    "publisher": "mfery",
+    "icon": "media/service-fabric.png",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michaelfery/vscode-sf-mesh-tools"
+    },
+    "bugs": {
+        "url": "https://github.com/michaelfery/vscode-sf-mesh-tools/issues"
+    },
+    "categories": [
+        "Azure"
+    ],
+    "keywords": [
+        "Azure",
+        "Service Fabric",
+        "Service Fabric Mesh"
+    ],
+    "activationEvents": [
+        "onCommand:sfmesh.login",
+        "onCommand:sfmesh.createDeploymentProfile",
+        "onCommand:sfmesh.deploy"       
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "sfmesh.login",
+                "title": "Login",
+                "category": "Service Fabric Mesh"
+            },
+            {
+                "command": "sfmesh.createDeploymentProfile",
+                "title": "Create deployment profile",
+                "category": "Service Fabric Mesh"
+            },
+            {
+                "command": "sfmesh.deploy",
+                "title": "Deploy to Azure",
+                "category": "Service Fabric Mesh"
+            }
+        ],
+        "configuration":
+        {
+            "title": "Service Fabric Mesh Tools : Publish profile generator",
+            "properties": {
+                "sf-mesh-tools.defaultSubscriptionId": {
+					"type": "string",
+					"default": "your-subscription-id",
+					"description": "Default Subscription Id when generate deploy profile"
+				},
+                "sf-mesh-tools.defaultResourceGroup": {
+					"type": "string",
+					"default": "your-resource-group",
+					"description": "Default Resource Group when generate deploy profile"
+				},
+                "sf-mesh-tools.defaultTemplateUri": {
+					"type": "string",
+					"default": "https://sfmeshsamples.blob.core.windows.net/templates/helloworld/mesh_rp.linux.json",
+					"description": "Default templateUri when generate deploy profile"
+				},
+                "sf-mesh-tools.defaultDeployLocation": {
+					"type": "string",
+					"default": "westeurope",
+					"description": "Default location when generate deploy profile"
+				}
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
