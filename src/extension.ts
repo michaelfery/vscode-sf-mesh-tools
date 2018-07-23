@@ -7,6 +7,8 @@ import * as constants  from "./constants";
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+let singleTerminal: vscode.Terminal | undefined;
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -21,6 +23,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.login', login));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.createDeploymentProfile', createDeploymentProfile));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.deploy', deployToAzure));
+
+    vscode.window.onDidCloseTerminal(e => {
+        if (e.name === constants.config.terminalName) {
+            singleTerminal = undefined;
+        }
+    });
 }
 
 // this method is called when your extension is deactivated
@@ -87,14 +95,12 @@ async function deployToAzure() {
 }
 
 function getTerminal(): vscode.Terminal {
-    let terminals = <vscode.Terminal[]>(<any>vscode.window).terminals;
-	if (terminals.length !== 0) {
-        terminals.forEach(function (t:vscode.Terminal) {
-            if (t.name == "SF Mesh Tools"){
-                return t;
-            }
-        });
+    if (singleTerminal) {
+        return singleTerminal;
     }
-    let terminal = (<any>vscode.window).createTerminal(constants.config.terminalName);
-    return terminal;
+    else {
+        let terminal = (<any>vscode.window).createTerminal(constants.config.terminalName);
+        singleTerminal = terminal;
+        return <vscode.Terminal>singleTerminal;    
+    }
 }
