@@ -13,6 +13,7 @@ Deploy To Azure Service Fabric Mesh :
 * Set config **sf-mesh-tools.defaultResourceGroup** to fill deployment profile automatically
 * Set config **sf-mesh-tools.defaultTemplateUri** to fill deployment profile automatically
 * Set config **sf-mesh-tools.defaultTemplateFile** to fill deployment profile automatically
+* Set config **sf-mesh-tools.defaultParameters** to fill deployment profile automatically
 
 ## Changelog
 

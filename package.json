@@ -27,7 +27,7 @@
     "activationEvents": [
         "onCommand:sfmesh.login",
         "onCommand:sfmesh.createDeploymentProfile",
-        "onCommand:sfmesh.deploy"       
+        "onCommand:sfmesh.deploy"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -48,35 +48,38 @@
                 "category": "Service Fabric Mesh"
             }
         ],
-        "configuration":
-        {
+        "configuration": {
             "title": "Service Fabric Mesh Tools : Publish profile generator",
             "properties": {
                 "sf-mesh-tools.defaultSubscriptionId": {
-					"type": "string",
-					"default": "your-subscription-id",
-					"description": "Default Subscription Id when generate deploy profile"
-				},
+                    "type": "string",
+                    "default": "your-subscription-id",
+                    "description": "Default Subscription Id when generate deploy profile"
+                },
                 "sf-mesh-tools.defaultResourceGroup": {
-					"type": "string",
-					"default": "your-resource-group",
-					"description": "Default Resource Group when generate deploy profile"
-				},
+                    "type": "string",
+                    "default": "your-resource-group",
+                    "description": "Default Resource Group when generate deploy profile"
+                },
                 "sf-mesh-tools.defaultTemplateUri": {
-					"type": "string",
-					"default": "https://sfmeshsamples.blob.core.windows.net/templates/helloworld/mesh_rp.linux.json",
-					"description": "Default template uri when generate deploy profile"
-				},
+                    "type": "string",
+                    "default": "https://sfmeshsamples.blob.core.windows.net/templates/helloworld/mesh_rp.linux.json",
+                    "description": "Default template uri when generate deploy profile"
+                },
                 "sf-mesh-tools.defaultTemplateFile": {
-					"type": "string",
-					"default": "",
-					"description": "Default template file path when generate deploy profile"
-				},
-                "sf-mesh-tools.defaultDeployLocation": {
-					"type": "string",
-					"default": "westeurope",
-					"description": "Default location when generate deploy profile"
-				}
+                    "type": "string",
+                    "default": "",
+                    "description": "Default template file path when generate deploy profile"
+                },
+                "sf-mesh-tools.defaultParameters": {
+                    "type": "json",
+                    "default": {
+                        "location": {
+                            "value": "westeurope"
+                        }
+                    },
+                    "description": "Default deployment parameters"
+                }
             }
         }
     },

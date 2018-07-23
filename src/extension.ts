@@ -41,6 +41,7 @@ class DeploymentProfile{
     TemplateUri?: string;
     TemplateFile?: string;
     Location?: string;
+    InlineParameters?: JSON;
 }
 
 async function login() {
@@ -53,10 +54,10 @@ async function createDeploymentProfile() {
     var configuration =  vscode.workspace.getConfiguration(constants.config.projectName);
     let deployment = new DeploymentProfile();
     deployment.SubscriptionId = configuration.get<string>(constants.config.defaultSubscriptionId);
-    deployment.Location = configuration.get<string>(constants.config.defaultDeployLocation);
     deployment.ResourceGroup = configuration.get<string>(constants.config.defaultResourceGroup);
     deployment.TemplateUri = configuration.get<string>(constants.config.defaultTemplateUri);
     deployment.TemplateFile = configuration.get<string>(constants.config.defaultTemplateFile);
+    deployment.InlineParameters = configuration.get<JSON>(constants.config.defaultParameters);
     let json = JSON.stringify(deployment, undefined, 4);
     
     let filePath = path.join(<string>vscode.workspace.rootPath, constants.config.deploymentFileName);
@@ -86,9 +87,9 @@ async function deployToAzure() {
                 terminal.sendText("az account set --subscription " + deploymentProfile.SubscriptionId, true);
             }
             if (deploymentProfile.TemplateUri !== undefined && deploymentProfile.TemplateUri.length > 0) {
-                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '{\\\"location\\\": {\\\"value\\\": \\\"" + deploymentProfile.Location + "\\\"}}'", true);
+                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
             } else {
-                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-file " + deploymentProfile.TemplateFile + " --parameters '{\\\"location\\\": {\\\"value\\\": \\\"" + deploymentProfile.Location + "\\\"}}'", true);
+                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-file " + deploymentProfile.TemplateFile + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
             }            
         }
     });
