@@ -1,7 +1,7 @@
 'use strict';
 import * as fileUtils from './utils/file';
 import * as path from "path";
-import * as constants  from "./constants";
+import * as constants from "./constants";
 
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
@@ -35,8 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
-class DeploymentProfile{
-    SubscriptionId?:string;
+class DeploymentProfile {
+    SubscriptionId?: string;
     ResourceGroup?: string;
     TemplateUri?: string;
     TemplateFile?: string;
@@ -51,7 +51,7 @@ async function login() {
 }
 
 async function createDeploymentProfile() {
-    var configuration =  vscode.workspace.getConfiguration(constants.config.projectName);
+    var configuration = vscode.workspace.getConfiguration(constants.config.projectName);
     let deployment = new DeploymentProfile();
     deployment.SubscriptionId = configuration.get<string>(constants.config.defaultSubscriptionId);
     deployment.ResourceGroup = configuration.get<string>(constants.config.defaultResourceGroup);
@@ -59,7 +59,7 @@ async function createDeploymentProfile() {
     deployment.TemplateFile = configuration.get<string>(constants.config.defaultTemplateFile);
     deployment.InlineParameters = configuration.get<JSON>(constants.config.defaultParameters);
     let json = JSON.stringify(deployment, undefined, 4);
-    
+
     let filePath = path.join(<string>vscode.workspace.rootPath, constants.config.deploymentFileName);
     await fileUtils.write(filePath, json);
 }
@@ -69,17 +69,20 @@ async function deployToAzure() {
     const cloudProfile: vscode.Uri[] = await vscode.workspace.findFiles('**/' + constants.config.deploymentFileName);
     const pathToCloudProfile = cloudProfile[0].fsPath.replace('/c:', '');
 
-    await fs.readFile(pathToCloudProfile, 'utf8', function (err: NodeJS.ErrnoException, data:string) {
+    await fs.readFile(pathToCloudProfile, 'utf8', function (err: NodeJS.ErrnoException, data: string) {
         if (err) {
             throw err;
         }
         let deploymentProfile = Object.assign(new DeploymentProfile, JSON.parse(data));
 
         if (deploymentProfile.ResourceGroup === undefined || deploymentProfile.ResourceGroup.length <= 0) {
-            vscode.window.showInformationMessage('Deployment file is missing parameter ResourceGroup');
+            vscode.window.showWarningMessage('Deployment file is missing parameter ResourceGroup');
         } else if ((deploymentProfile.TemplateUri === undefined || deploymentProfile.TemplateUri.length <= 0) &&
-                    (deploymentProfile.TemplateFile === undefined || deploymentProfile.TemplateFile.length <= 0)) {
-            vscode.window.showInformationMessage('Deployment file is missing parameter TemplateUri or TemplateFile');
+            (deploymentProfile.TemplateFile === undefined || deploymentProfile.TemplateFile.length <= 0)) {
+            vscode.window.showWarningMessage('TemplateFile or TemplateUri must be set in deployment file');
+        } else if ((deploymentProfile.TemplateUri !== undefined && deploymentProfile.TemplateUri.length > 0 &&
+            deploymentProfile.TemplateFile !== undefined && deploymentProfile.TemplateFile.length > 0)) {
+            vscode.window.showWarningMessage('TemplateFile and TemplateUri cannot be both set in deployment file');
         } else {
             let terminal = getTerminal();
             terminal.show(true);
@@ -87,10 +90,10 @@ async function deployToAzure() {
                 terminal.sendText("az account set --subscription " + deploymentProfile.SubscriptionId, true);
             }
             if (deploymentProfile.TemplateUri !== undefined && deploymentProfile.TemplateUri.length > 0) {
-                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
+                terminal.sendText("az mesh deployment create --resource-group " + deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
             } else {
-                terminal.sendText("az mesh deployment create --resource-group "+ deploymentProfile.ResourceGroup + " --template-file " + deploymentProfile.TemplateFile + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
-            }            
+                terminal.sendText("az mesh deployment create --resource-group " + deploymentProfile.ResourceGroup + " --template-file " + deploymentProfile.TemplateFile + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
+            }
         }
     });
 }
@@ -102,6 +105,6 @@ function getTerminal(): vscode.Terminal {
     else {
         let terminal = (<any>vscode.window).createTerminal(constants.config.terminalName);
         singleTerminal = terminal;
-        return <vscode.Terminal>singleTerminal;    
+        return <vscode.Terminal>singleTerminal;
     }
 }
