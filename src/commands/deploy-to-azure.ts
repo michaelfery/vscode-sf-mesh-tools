@@ -8,7 +8,7 @@ import * as vscode from 'vscode';
 
 export async function deployToAzure() {
     var fs = require('fs');
-    const cloudProfile: vscode.Uri[] = await vscode.workspace.findFiles('**/' + constants.config.deploymentFileName);
+    const cloudProfile: vscode.Uri[] = await vscode.workspace.findFiles('**/deploy/' + constants.config.deploymentFileName);
     const pathToCloudProfile = cloudProfile[0].fsPath.replace('/c:', '');
 
     await fs.readFile(pathToCloudProfile, 'utf8', function (err: NodeJS.ErrnoException, data: string) {
