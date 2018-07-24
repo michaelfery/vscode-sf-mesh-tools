@@ -27,7 +27,8 @@
     "activationEvents": [
         "onCommand:sfmesh.login",
         "onCommand:sfmesh.createDeploymentProfile",
-        "onCommand:sfmesh.deploy"
+        "onCommand:sfmesh.deploy",
+        "onCommand:sfmesh.list"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -46,7 +47,12 @@
                 "command": "sfmesh.deploy",
                 "title": "Deploy To Azure",
                 "category": "Service Fabric Mesh"
-            }
+            },
+            {
+                "command": "sfmesh.list",
+                "title": "List the deployed applications",
+                "category": "Service Fabric Mesh"
+            }            
         ],
         "configuration": {
             "title": "Service Fabric Mesh Tools : Publish profile generator",

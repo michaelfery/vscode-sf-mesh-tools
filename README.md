@@ -7,6 +7,7 @@ Deploy To Azure Service Fabric Mesh :
 * Use command **Service Fabric Mesh: Generate deployment profile**
 * Update the profile parameters (subscriptionId, resourceGroup, etc.)
 * Use command **Service Fabric Mesh: Deploy To Azure** (the command creates the resource group if needed)
+* Use command **Service Fabric Mesh: List the deployed applications**
 
 ## Configuration 
 * Set config **sf-mesh-tools.defaultSubscriptionId** to fill deployment profile automatically
