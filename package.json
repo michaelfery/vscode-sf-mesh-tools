@@ -61,6 +61,11 @@
                     "default": "your-resource-group",
                     "description": "Default Resource Group when generate deploy profile"
                 },
+                "sf-mesh-tools.defaultResourceGroupLocation": {
+                    "type": "string",
+                    "default": "westeurope",
+                    "description": "Default Resource Group Location when generate deploy profile"
+                },
                 "sf-mesh-tools.defaultTemplateUri": {
                     "type": "string",
                     "default": "https://sfmeshsamples.blob.core.windows.net/templates/helloworld/mesh_rp.linux.json",

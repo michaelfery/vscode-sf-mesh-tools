@@ -38,6 +38,7 @@ export function deactivate() {
 class DeploymentProfile {
     SubscriptionId?: string;
     ResourceGroup?: string;
+    ResourceGroupLocation?: string;
     TemplateUri?: string;
     TemplateFile?: string;
     Location?: string;
@@ -55,6 +56,7 @@ async function createDeploymentProfile() {
     let deployment = new DeploymentProfile();
     deployment.SubscriptionId = configuration.get<string>(constants.config.defaultSubscriptionId);
     deployment.ResourceGroup = configuration.get<string>(constants.config.defaultResourceGroup);
+    deployment.ResourceGroupLocation = configuration.get<string>(constants.config.defaultResourceGroupLocation);
     deployment.TemplateUri = configuration.get<string>(constants.config.defaultTemplateUri);
     deployment.TemplateFile = configuration.get<string>(constants.config.defaultTemplateFile);
     deployment.InlineParameters = configuration.get<JSON>(constants.config.defaultParameters);
@@ -77,6 +79,9 @@ async function deployToAzure() {
 
         if (deploymentProfile.ResourceGroup === undefined || deploymentProfile.ResourceGroup.length <= 0) {
             vscode.window.showWarningMessage('Deployment file is missing parameter ResourceGroup');
+        }
+        else if (deploymentProfile.ResourceGroupLocation === undefined || deploymentProfile.ResourceGroupLocation.length <= 0) {
+                vscode.window.showWarningMessage('Deployment file is missing parameter ResourceGroupLocation');
         } else if ((deploymentProfile.TemplateUri === undefined || deploymentProfile.TemplateUri.length <= 0) &&
             (deploymentProfile.TemplateFile === undefined || deploymentProfile.TemplateFile.length <= 0)) {
             vscode.window.showWarningMessage('TemplateFile or TemplateUri must be set in deployment file');
@@ -88,6 +93,9 @@ async function deployToAzure() {
             terminal.show(true);
             if (deploymentProfile.SubscriptionId !== undefined && deploymentProfile.SubscriptionId.length > 0) {
                 terminal.sendText("az account set --subscription " + deploymentProfile.SubscriptionId, true);
+            }
+            if (deploymentProfile.SubscriptionId !== undefined && deploymentProfile.SubscriptionId.length > 0) {
+                terminal.sendText("az group create --name " + deploymentProfile.ResourceGroup + " --location " + deploymentProfile.ResourceGroupLocation, true);
             }
             if (deploymentProfile.TemplateUri !== undefined && deploymentProfile.TemplateUri.length > 0) {
                 terminal.sendText("az mesh deployment create --resource-group " + deploymentProfile.ResourceGroup + " --template-uri " + deploymentProfile.TemplateUri + " --parameters '" + JSON.stringify(deploymentProfile.InlineParameters).replace(/"/g, '\\"') + "'", true);
