@@ -1,12 +1,16 @@
 # Change Log
 All notable changes to the "vscode-sf-mesh-tools" extension will be documented in this file.
 
-## [0.3.0] - 2018-07-25
+## [0.4.0] - 2018-07-25
+### Added
+- Use command **Service Fabric Mesh: Create Application** to generate mesh template and deploy profile
+
+## [0.3.0] - 2018-07-24
 ### Added
 - The **Deploy to Azure** command automatically generates the resource group if needed
 - Use command **Service Fabric Mesh: List the deployed applications**
 
-## [0.2.0] - 2018-07-24
+## [0.2.0] - 2018-07-23
 ### Added
 - Single terminal window
 - Json deployment parameters in deployment profile with default location value
