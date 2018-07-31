@@ -2,7 +2,7 @@
     "name": "sf-mesh-tools",
     "displayName": "Service Fabric Mesh Tools",
     "description": "Service Fabric Mesh Tools",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "publisher": "mfery",
     "engines": {
         "vscode": "^1.25.0"
