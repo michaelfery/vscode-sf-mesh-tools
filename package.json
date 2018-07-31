@@ -26,6 +26,7 @@
     ],
     "activationEvents": [
         "onCommand:sfmesh.createApplication",
+        "onCommand:sfmesh.addService",
         "onCommand:sfmesh.login",
         "onCommand:sfmesh.createDeploymentProfile",
         "onCommand:sfmesh.deploy",
@@ -37,6 +38,11 @@
             {
                 "command": "sfmesh.createApplication",
                 "title": "Create Application",
+                "category": "Service Fabric Mesh"
+            },
+            {
+                "command": "sfmesh.addService",
+                "title": "Add Service",
                 "category": "Service Fabric Mesh"
             },
             {

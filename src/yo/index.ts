@@ -18,7 +18,7 @@ async function getWorkingFolder() {
 	return selectedWkFolder ? selectedWkFolder.uri.fspath : undefined;
 }
 
-export async function generatorProject() {
+export async function generatorProject(addService) {
 	const cwd = await getWorkingFolder();
 	if (!cwd) {
 		window.showErrorMessage('Please open a workspace directory first.');
@@ -28,10 +28,6 @@ export async function generatorProject() {
     const yo = new Yeoman({ cwd });
 	let main;
 
-    //const generator = await window.showQuickPick(list(yo));
-	// if (generator === undefined) {
-	// 	return;
-    // }	
 	let generators = await list(yo);
 	if (generators === undefined || generators.length <= 0){
 		return;
@@ -39,7 +35,16 @@ export async function generatorProject() {
 	let generator = generators[0];
     
 	main = generator.label;
-    let subGenerator = 'app';
+	let subGenerator: string;
+	if ((generator as any).subGenerators.length > 1 && addService) {
+		subGenerator = "addService";
+	} else {
+		subGenerator = 'app';
+	}
+
+	if (subGenerator === undefined) {
+		return;
+	}
 
     try {
 		const question: string = await yo.run(`${main}:${subGenerator}`, cwd) as string;

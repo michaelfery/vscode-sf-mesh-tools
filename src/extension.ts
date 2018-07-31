@@ -2,6 +2,7 @@
 import * as constants from "./constants";
 import * as terminals from "./utils/terminals";
 import { createApplication } from './commands/create-application';
+import { addService } from './commands/add-service';
 import { login } from './commands/login';
 import { createDeploymentProfile } from './commands/create-deployment-profile';
 import { deployToAzure } from './commands/deploy-to-azure';
@@ -23,6 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.createApplication', createApplication));
+    context.subscriptions.push(vscode.commands.registerCommand('sfmesh.addService', addService));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.login', login));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.createDeploymentProfile', createDeploymentProfile));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.deploy', deployToAzure));
