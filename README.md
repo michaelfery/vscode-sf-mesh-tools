@@ -37,6 +37,7 @@ npm install -g generator-azuresfmesh
 The Service Fabric Mesh extension for VS Code helps developers to create and deploy Service Fabric Mesh projects using many commands. Commands can be called pressing (Ctrl + Shift + p), typing the command name into the input bar, and selecting the desired command for the prompt list.
 
 * **Service Fabric Mesh: Create Application** (the command creates the mesh template and deployment profile)
+* **Service Fabric Mesh: Add Service** (the command adds a new service to an existing Service Fabric Mesh application)
 * **Service Fabric Mesh: Generate deployment profile** (from template file or uri)
 * **Service Fabric Mesh: Login**
 * **Service Fabric Mesh: Deploy To Azure** (the command creates the resource group if needed)
