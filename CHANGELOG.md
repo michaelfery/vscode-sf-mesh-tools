@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "vscode-sf-mesh-tools" extension will be documented in this file.
 
+## [0.5.0] - 2018-07-24
+### Added
+- Use command **Service Fabric Mesh: Add Service** to add a new service to an existing app template
+
 ## [0.4.0] - 2018-07-25
 ### Added
 - Use command **Service Fabric Mesh: Create Application** to generate mesh template and deploy profile
