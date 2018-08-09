@@ -42,6 +42,8 @@ The Service Fabric Mesh extension for VS Code helps developers to create and dep
 * **Service Fabric Mesh: Login**
 * **Service Fabric Mesh: Deploy To Azure** (the command creates the resource group if needed)
 * **Service Fabric Mesh: List the deployed applications**
+* **Service Fabric Mesh: List the deployed networks**
+* **Service Fabric Mesh: List the services of an Application**
 
 ### Deployment profile
 The deployment profile (deploy/deployment.json) can be created with the application **Service Fabric Mesh: Create Application** or with the standalone command **Service Fabric Mesh: Generate deployment profile**.
