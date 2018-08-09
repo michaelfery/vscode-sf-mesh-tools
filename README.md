@@ -9,6 +9,8 @@ A [Visual Studio Code](https://code.visualstudio.com/) extension that provides s
 * Login to Azure
 * Deploy Service fabric mesh applications to Azure
 * List the deployed applications
+* List the deployed networks
+* List the services of a deployed application
 
 ![Service Fabric Commands in Visual Studio Code](./media/commands.png)
 
