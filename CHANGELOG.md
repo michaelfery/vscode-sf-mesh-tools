@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "vscode-sf-mesh-tools" extension will be documented in this file.
 
+## [0.6.0] - 2018-08-09
+### Added
+- Use command **Service Fabric Mesh: List the deployed networks** to list the deployed networks info: name, provisioning state and public IP
+- Use command **Service Fabric Mesh: List the services of an Application** to list the services of deployed applications
+
 ## [0.5.0] - 2018-07-24
 ### Added
 - Use command **Service Fabric Mesh: Add Service** to add a new service to an existing app template
