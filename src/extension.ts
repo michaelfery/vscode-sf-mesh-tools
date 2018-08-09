@@ -1,12 +1,12 @@
 'use strict';
 import * as constants from "./constants";
 import * as terminals from "./utils/terminals";
-import { createApplication } from './commands/create-application';
-import { addService } from './commands/add-service';
+import { createApplication, listApps } from './commands/application';
+import { addService, listAppServices } from './commands/service';
+import { listNetworks } from './commands/network';
 import { login } from './commands/login';
 import { createDeploymentProfile } from './commands/create-deployment-profile';
 import { deployToAzure } from './commands/deploy-to-azure';
-import { list } from './commands/list';
 
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
@@ -28,7 +28,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.login', login));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.createDeploymentProfile', createDeploymentProfile));
     context.subscriptions.push(vscode.commands.registerCommand('sfmesh.deploy', deployToAzure));
-    context.subscriptions.push(vscode.commands.registerCommand('sfmesh.list', list));
+    context.subscriptions.push(vscode.commands.registerCommand('sfmesh.listApps', listApps));
+    context.subscriptions.push(vscode.commands.registerCommand('sfmesh.listNetworks', listNetworks));
+    context.subscriptions.push(vscode.commands.registerCommand('sfmesh.listAppServices', listAppServices));
     
     vscode.window.onDidCloseTerminal(e => {
         if (e.name === constants.config.terminalName) {

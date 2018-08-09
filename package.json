@@ -30,7 +30,9 @@
         "onCommand:sfmesh.login",
         "onCommand:sfmesh.createDeploymentProfile",
         "onCommand:sfmesh.deploy",
-        "onCommand:sfmesh.list"
+        "onCommand:sfmesh.listApps",
+        "onCommand:sfmesh.listNetworks",
+        "onCommand:sfmesh.listAppServices"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -61,8 +63,18 @@
                 "category": "Service Fabric Mesh"
             },
             {
-                "command": "sfmesh.list",
-                "title": "List the deployed applications",
+                "command": "sfmesh.listApps",
+                "title": "List all the deployed Applications",
+                "category": "Service Fabric Mesh"
+            },
+            {
+                "command": "sfmesh.listNetworks",
+                "title": "List all the deployed Networks",
+                "category": "Service Fabric Mesh"
+            },
+            {
+                "command": "sfmesh.listAppServices",
+                "title": "List the services of an Application",
                 "category": "Service Fabric Mesh"
             }
         ],
