@@ -20,7 +20,7 @@ As VS Code is a lightweight editor, a number of dependencies must be first insta
 
 * [Install Visual Studio Code](https://code.visualstudio.com/)
 * [Install Node.js](https://nodejs.org/en/)
-* [Install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+* [Setup Service Fabric Mesh CLI](https://docs.microsoft.com/en-us/azure/service-fabric-mesh/service-fabric-mesh-howto-setup-cli)
 * [Install Git](https://git-scm.com/)
 * Install Yeoman Generators
 ```sh
