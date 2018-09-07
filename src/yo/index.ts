@@ -32,7 +32,7 @@ export async function generatorProject(addService) {
 	if (generators === undefined || generators.length <= 0){
 		return;
 	}
-	let generator = generators[0];
+	let generator = generators[0];// Only one Service Fabric Mesh generator is used for now
     
 	main = generator.label;
 	let subGenerator: string;
@@ -96,10 +96,23 @@ function list(yo: Yeoman): Promise<QuickPickItem[]> {
 
 					return;
 				}
-				const azureGenerators = generators.filter(generator => {
+				const sfMeshGenerators = generators.filter(generator => {
 					return generator.label === azuresfmeshGenerator;
 				});
-				resolve(azureGenerators);
+				
+				if (sfMeshGenerators.length === 0) {
+					reject();
+
+					window.showInformationMessage('Make sure to install Service Fabric Mesh generators first.', 'more info')
+						.then(choice => {
+							if (choice === 'more info') {
+								opn('https://github.com/michaelfery/vscode-sf-mesh-tools#requirements');
+							}
+						});
+
+					return;
+				}
+				resolve(sfMeshGenerators);
 			});
 		});
 	});
