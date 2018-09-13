@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to the "vscode-sf-mesh-tools" extension will be documented in this file.
 
+## [0.7.0] - 2018-09-13
+### Fix
+- add user prompt for template path in deployment profile
+- upgrade yeoman generator check
+
 ## [0.6.0] - 2018-08-09
 ### Added
 - Use command **Service Fabric Mesh: List the deployed networks** to list the deployed networks info: name, provisioning state and public IP
