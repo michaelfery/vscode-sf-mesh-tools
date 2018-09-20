@@ -9,8 +9,11 @@ import * as terminals from "../utils/terminals";
 import * as constants from "../constants";
 
 export async function addService() {
-    await generatorProject(true);
-    await createDeploymentProfile('deploy/mesh.template.json', '');
+    var success = await generatorProject(true);
+    if (success === true)
+    {
+        await createDeploymentProfile('deploy/mesh.template.json', '');
+    }
 }
 
 export async function listAppServices() {

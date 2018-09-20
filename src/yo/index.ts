@@ -2,23 +2,13 @@
 
 import { window, workspace, QuickPickItem } from 'vscode';
 import Yeoman from './yo/yo';
+import { getWorkingFolder } from '../utils/workspace';
 
 const azuresfmeshGenerator = 'azuresfmesh';
 const opn = require('opn');
 
-async function getWorkingFolder() {
-	if (!Array.isArray(workspace.workspaceFolders) || workspace.workspaceFolders.length === 0) {
-		return undefined;
-	}
-
-	if (workspace.workspaceFolders.length === 1) {
-		return workspace.workspaceFolders[0].uri.fsPath;
-	}
-	const selectedWkFolder = (window as any).showWorkspaceFolderPick();
-	return selectedWkFolder ? selectedWkFolder.uri.fspath : undefined;
-}
-
-export async function generatorProject(addService) {
+export async function generatorProject(addService): Promise<boolean> {
+	var success = false;
 	const cwd = await getWorkingFolder();
 	if (!cwd) {
 		window.showErrorMessage('Please open a workspace directory first.');
@@ -58,17 +48,15 @@ export async function generatorProject(addService) {
 		const argument = input;
 		await yo.run(`${main}:${subGenerator} ${argument}`, cwd);
 
+		success = true;
+
 	} catch (err) {
 		const regexp = new RegExp('Did not provide required argument (.*?)!', 'i');
-
-		if (err) {
-			const match = err.message.match(regexp);
-
-			if (match) {
-				return `${subGenerator} ${match[1]}?`;
-			}
-		}
 		window.showErrorMessage(err.message || err);
+	}
+	finally
+	{
+		return success;
 	}
 }
 
