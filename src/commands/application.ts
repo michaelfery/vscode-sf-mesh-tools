@@ -4,8 +4,11 @@ import { createDeploymentProfile } from './create-deployment-profile';
 import * as terminals from "../utils/terminals";
 
 export async function createApplication() {
-    await generatorProject(false);
-    await createDeploymentProfile('deploy/mesh.template.json', '');
+    var success = await generatorProject(false);
+    if (success === true)
+    {
+        await createDeploymentProfile('deploy/mesh.template.json', '');
+    }
 }
 
 export async function listApps() {
